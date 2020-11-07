@@ -16,8 +16,10 @@ class SearchPage extends React.Component {
   };
 
   render() {
-    const { profiles = [] } = this.context;
+    const { profiles = [], loading } = this.context;
+    console.log('search page');
 
+    const mockPhoto = () => Math.floor(Math.random() * 10 + 1);
     return (
       <React.Fragment>
         <Header />
@@ -47,11 +49,9 @@ class SearchPage extends React.Component {
             {profiles.map((profile) => (
               <SearchCard
                 key={profile.id}
-                photoUrl={profile.photoUrl}
-                handle={profile.handle}
-                location={profile.location}
-                age={profile.age}
-                photoCount={profile.photoCount}
+                photoUrl={`https://placeimg.com/200/200/people?id=${mockPhoto()}`}
+                handle={profile.name}
+                location={profile.realm}
               />
             ))}
           </div>
