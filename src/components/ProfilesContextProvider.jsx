@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
-// import mockProfiles from '../profiles.json';
+import React, { useEffect } from 'react';
+import { getLotrProfiles } from '../services/dataService';
 
 export const ProfileContext = React.createContext({
   profiles: [],
 });
-
-const apiKey = 'TRqUueyVk9Ro1afAB2eR';
-const api = 'https://the-one-api.dev/v2/character?limit=20';
 
 function ProfilesReducer(state, action) {
   let profiles;
@@ -14,7 +11,7 @@ function ProfilesReducer(state, action) {
   switch (action.type) {
     case 'ascending':
       profiles = [...state.profiles];
-      profiles.sort((profileA, profileB) => profileA.name.localeCompare(profileB.name));
+      profiles.sort((profileA, profileB) => (profileA.name > profileB.name ? 1 : -1));
       return { profiles };
 
     case 'descending':
@@ -31,35 +28,18 @@ function ProfilesReducer(state, action) {
   }
 }
 
-const fetchUsers = async () => {
-  return await fetch(api, {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((body) => body.docs);
-};
-
 function ProfilesContextProvider({ children }) {
-  const [loading, setLoading] = useState(true);
   const [state, dispatch] = React.useReducer(ProfilesReducer, {
     profiles: [],
   });
 
   useEffect(async () => {
-    setLoading(true);
-    const userProfiles = await fetchUsers();
-    dispatch({ type: 'setUsers', payload: userProfiles });
-    setLoading(false);
+    const profiles = await getLotrProfiles();
+    dispatch({ type: 'setUsers', payload: profiles });
   }, []);
 
-  console.log({ loading });
-
   return (
-    <ProfileContext.Provider value={{ ...state, loading, dispatch }}>
-      {children}
-    </ProfileContext.Provider>
+    <ProfileContext.Provider value={{ ...state, dispatch }}>{children}</ProfileContext.Provider>
   );
 }
 

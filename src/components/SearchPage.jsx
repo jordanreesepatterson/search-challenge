@@ -3,9 +3,12 @@ import { ProfileContext } from './ProfilesContextProvider';
 import MinimalButton from './MinimalButton';
 import Header from './Header';
 import SearchCard from './SearchCard';
+import ProfileModal from './ProfileModal';
 
 class SearchPage extends React.Component {
   static contextType = ProfileContext;
+
+  state = {};
 
   handleSortAscending = () => {
     this.context.dispatch({ type: 'ascending' });
@@ -15,16 +18,22 @@ class SearchPage extends React.Component {
     this.context.dispatch({ type: 'descending' });
   };
 
+  toggleProfileModal = (modalVisible, selectedProfile) => {
+    console.log({ modalVisible, selectedProfile });
+    this.setState({ modalVisible, selectedProfile });
+  };
+
   render() {
-    const { profiles = [], loading } = this.context;
+    const { profiles = [] } = this.context;
+    const { modalVisible = false, selectedProfile = {} } = this.state;
+
     console.log('search page');
 
-    const mockPhoto = () => Math.floor(Math.random() * 10 + 1);
     return (
       <React.Fragment>
         <Header />
 
-        <main style={{ margin: 24 }}>
+        <main style={{ margin: 24, position: 'relative' }}>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <MinimalButton disabled>
               <img src="filter.svg" width={22} alt="filter" />
@@ -48,14 +57,19 @@ class SearchPage extends React.Component {
           >
             {profiles.map((profile) => (
               <SearchCard
-                key={profile.id}
-                photoUrl={`https://placeimg.com/200/200/people?id=${mockPhoto()}`}
+                key={profile._id}
+                id={profile._id}
+                photoUrl={profile.photoUrl}
                 handle={profile.name}
                 location={profile.realm}
+                onClick={() => this.toggleProfileModal(true, profile)}
               />
             ))}
           </div>
         </main>
+        {modalVisible && (
+          <ProfileModal profile={selectedProfile} onClick={() => this.toggleProfileModal(false)} />
+        )}
       </React.Fragment>
     );
   }

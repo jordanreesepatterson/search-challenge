@@ -15,7 +15,14 @@ const styles = {
 
 export default class Search extends React.PureComponent {
   render() {
-    const { photoUrl = '', handle = '', location = '', age = 99, photoCount = 0 } = this.props;
+    const {
+      photoUrl = '',
+      handle = '',
+      location = '',
+      age = 99,
+      photoCount = 0,
+      onClick = () => {},
+    } = this.props;
 
     return (
       <div style={styles.card}>
@@ -26,6 +33,7 @@ export default class Search extends React.PureComponent {
             boxShadow: '0 3px 6px lightgray, 0 3px 6px',
             overflow: 'hidden',
           }}
+          onClick={onClick}
         >
           <div style={styles.avatar}>
             <img src={photoUrl} alt="potential date"></img>
