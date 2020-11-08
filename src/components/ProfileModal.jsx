@@ -49,7 +49,7 @@ const styles = {
 };
 
 const ProfileModal = (props) => {
-  const { profile, onClick } = props;
+  const { profile = {}, onClick = () => {} } = props;
 
   const infoRow = (datapoint) => (
     <div style={styles.info}>
@@ -67,6 +67,7 @@ const ProfileModal = (props) => {
           <img src={profile.photoUrl} alt="avatar" />
           <div style={{ padding: '0px 20px', fontSize: '12px' }}>
             <h3>{profile.name}</h3>
+            {/* overkill, but something fun to clean up code */}
             {displays.map((d) => infoRow(d))}
           </div>
         </div>

@@ -20,7 +20,7 @@ function ProfilesReducer(state, action) {
       return { profiles };
 
     case 'setUsers':
-      const { payload } = action;
+      const { payload = [] } = action;
       return { profiles: payload };
 
     default:

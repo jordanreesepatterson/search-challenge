@@ -1,5 +1,5 @@
 const apiKey = 'TRqUueyVk9Ro1afAB2eR';
-const api = 'https://the-one-api.dev/v2/character?limit=20';
+const api = 'https://the-one-api.dev/v2/character?limit=20&page=4&realm';
 
 const auth = { Authorization: `Bearer ${apiKey}` };
 

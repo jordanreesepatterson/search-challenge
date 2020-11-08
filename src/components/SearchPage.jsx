@@ -19,15 +19,12 @@ class SearchPage extends React.Component {
   };
 
   toggleProfileModal = (modalVisible, selectedProfile) => {
-    console.log({ modalVisible, selectedProfile });
     this.setState({ modalVisible, selectedProfile });
   };
 
   render() {
     const { profiles = [] } = this.context;
     const { modalVisible = false, selectedProfile = {} } = this.state;
-
-    console.log('search page');
 
     return (
       <React.Fragment>
