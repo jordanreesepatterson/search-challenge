@@ -3,7 +3,7 @@ import React from 'react';
 const button = {
   width: '130px',
   borderRadius: '5px',
-  fontWeight: 'bold',
+  background: 'white',
   cursor: 'pointer',
   padding: '3px',
   outline: 0,
@@ -26,20 +26,17 @@ const styles = {
   },
   close: {
     ...button,
-    border: '2px solid rgb(255, 99, 71)',
-    background: 'rgba(255, 99, 71, 0.1)',
+    border: '1px solid rgb(255, 99, 71)',
     color: 'rgb(255, 99, 71)',
   },
   poke: {
     ...button,
-    border: '2px solid rgb(60, 179, 113)',
-    background: 'rgba(60, 179, 113, 0.1)',
+    border: '1px solid rgb(60, 179, 113)',
     color: 'rgb(60, 179, 113)',
   },
   message: {
     ...button,
-    border: '2px solid rgb(0, 0, 255)',
-    background: 'rgba(0, 0, 255, 0.1)',
+    border: '1px solid rgb(0, 0, 255)',
     color: 'rgb(0, 0, 255)',
   },
   info: {
@@ -54,7 +51,7 @@ const ProfileModal = (props) => {
   const infoRow = (datapoint) => (
     <div style={styles.info}>
       <span style={{ width: 100, textTransform: 'capitalize' }}>{datapoint}:</span>
-      <span>{profile[datapoint]}</span>
+      <span>{profile[datapoint] || 'Unavailable'}</span>
     </div>
   );
 
@@ -67,7 +64,6 @@ const ProfileModal = (props) => {
           <img src={profile.photoUrl} alt="avatar" />
           <div style={{ padding: '0px 20px', fontSize: '12px' }}>
             <h3>{profile.name}</h3>
-            {/* overkill, but something fun to clean up code */}
             {displays.map((d) => infoRow(d))}
           </div>
         </div>
